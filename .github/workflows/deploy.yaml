@@ -13,9 +13,9 @@ jobs:
       run: echo "SHORT_SHA=$(echo $GITHUB_SHA | cut -c1-7)" >> $GITHUB_ENV
     - name: Build and push Docker image
       run: |
-        docker build -t maulanadsgn/node-example-cicd:${{ env.SHORT_SHA }} .
+        docker build -t aimejeslyn/node-example-cicd:${{ env.SHORT_SHA }} .
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push maulanadsgn/node-example-cicd:${{ env.SHORT_SHA }}
+        docker push aimejeslyn/node-example-cicd:${{ env.SHORT_SHA }}
     outputs:
       SHORT_SHA: ${{ env.SHORT_SHA }}
   deploy:
@@ -31,7 +31,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
-          docker pull maulanadsgn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
+          docker pull aimejeslyn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
           docker stop node-example || true
           docker rm node-example || true
-          docker run -d -p 3000:3000 --name node-example maulanadsgn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
+          docker run -d -p 3000:3000 --name node-example aimejeslyn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
