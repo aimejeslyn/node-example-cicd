@@ -1,8 +1,8 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT|| 8082;
 
-// Route for the root URL
+// Route for the root URLi
 app.get('/', (req, res) => {
   res.status(200).send('Welcome to the Dummy Server!. Testing the CI/CD pipeline.');
 });
