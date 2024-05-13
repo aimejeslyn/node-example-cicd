@@ -32,4 +32,5 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         script: |
           docker pull aimejeslyn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
-          docker run -d -p 8081:8081 --name node-example aimejeslyn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
+          docker rm -f node-example || true
+          docker run -d -p 8082:8082 --name node-example aimejeslyn/node-example-cicd:${{ needs.build.outputs.SHORT_SHA }}
